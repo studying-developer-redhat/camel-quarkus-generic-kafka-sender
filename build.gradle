@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation enforcedPlatform('io.quarkus.platform:quarkus-camel-bom:2.13.5.Final')
+    implementation enforcedPlatform('io.quarkus.platform:quarkus-camel-bom:2.7.6.Final')
     implementation 'org.apache.camel.quarkus:camel-quarkus-core'
     implementation 'org.apache.camel.quarkus:camel-quarkus-kafka'
     implementation 'io.quarkus:quarkus-openshift'
@@ -24,8 +24,8 @@ group 'com.redhat.rafaellbarros'
 version '1.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 test {
