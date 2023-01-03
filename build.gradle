@@ -14,6 +14,7 @@ dependencies {
     implementation enforcedPlatform('io.quarkus.platform:quarkus-camel-bom:2.13.5.Final')
     implementation 'org.apache.camel.quarkus:camel-quarkus-core'
     implementation 'org.apache.camel.quarkus:camel-quarkus-kafka'
+    implementation 'io.quarkus:quarkus-openshift'
     implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit5'
