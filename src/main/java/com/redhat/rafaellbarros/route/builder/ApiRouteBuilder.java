@@ -22,19 +22,19 @@ public class ApiRouteBuilder extends RouteBuilder {
                 .apiProperty("cors", "true");
 
         // REST methods configuration
-        rest().tag("API Demo using Camel and Quarkus")
+        rest("/rest").tag("API Demo using Camel and Quarkus")
                 .produces("application/json")
-                .post("/payloads")
-                .consumes("application/json")
+                .get("/payloads/{code}")
                 .description("Send payload to kafka")
-                .route().routeId("postPayload")
+                .route().routeId("getPayload")
                 .to("direct:sendToKafka")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                 .endRest();
         //Route that sends message to kafka topic
         from("direct:sendToKafka").routeId("sendToKafka")
-                .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
+                .log("code searched: ${header.code}")
+                // .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
                 .to("kafka:"+ KAFKA_TOPIC + "?brokers=" + KAFKA_BOOTSTRAP_SERVERS)
                 .setBody(simple("Message Sended!"));
 

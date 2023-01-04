@@ -14,8 +14,16 @@ dependencies {
     implementation enforcedPlatform('io.quarkus.platform:quarkus-camel-bom:2.7.6.Final')
     implementation 'org.apache.camel.quarkus:camel-quarkus-core'
     implementation 'org.apache.camel.quarkus:camel-quarkus-kafka'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-direct'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-openapi-java'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-qute'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-http'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-rest'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-jackson'
+    implementation 'io.quarkus:quarkus-swagger-ui'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-resteasy'
     implementation 'io.quarkus:quarkus-openshift'
-    implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit5'
 }
