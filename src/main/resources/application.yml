@@ -1,0 +1,19 @@
+quarkus:
+  swagger-ui:
+    always-include: 'true'
+    enable: 'true'
+    path: /api
+  openshift:
+    env:
+      vars:
+        kafka-bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:my-cluster-kafka-bootstrap.kafka-dev.svc.cluster.local:9092}
+        kafka-topic: ${KAFKA_TOPIC:eventos}
+    route:
+      expose: 'true'
+    deploy: 'true'
+  kubernetes-client:
+    trust-certs: 'true'
+  http:
+    non-application-root-path: /
+  s2i:
+    base-jvm-image: registry.access.redhat.com/ubi8/openjdk-11

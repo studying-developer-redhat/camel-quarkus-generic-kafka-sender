@@ -31,10 +31,11 @@ public class ApiRouteBuilder extends RouteBuilder {
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                 .endRest();
+
         //Route that sends message to kafka topic
         from("direct:sendToKafka").routeId("sendToKafka")
                 .log("code searched: ${header.code}")
-                // .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
+                .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
                 .to("kafka:"+ KAFKA_TOPIC + "?brokers=" + KAFKA_BOOTSTRAP_SERVERS)
                 .setBody(simple("Message Sended!"));
 
