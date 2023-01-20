@@ -6,11 +6,13 @@ import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.camel.model.rest.RestBindingMode;
 
 public class ApiRouteBuilder extends RouteBuilder {
+
     protected String KAFKA_TOPIC = "{{quarkus.openshift.env.vars.kafka-topic}}";
     protected String KAFKA_BOOTSTRAP_SERVERS = "{{quarkus.openshift.env.vars.kafka-bootstrap-servers}}";
 
     @Override
     public void configure() throws Exception {
+
         // REST and Open API configuration
         restConfiguration().bindingMode(RestBindingMode.auto)
                 .component("platform-http")
