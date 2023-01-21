@@ -2,12 +2,12 @@ quarkus:
   swagger-ui:
     always-include: 'true'
     enable: 'true'
-    path: /api
+    path: /send
   openshift:
     env:
       vars:
-        kafka-bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:my-cluster-kafka-bootstrap.kafka-dev.svc.cluster.local:9092}
-        kafka-topic: ${KAFKA_TOPIC:eventos}
+        kafka-bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka-cluster-dev-kafka-bootstrap.kafka-dev.svc.cluster.local:9092}
+        kafka-topic: ${KAFKA_TOPIC:payload}
     route:
       expose: 'true'
     deploy: 'true'

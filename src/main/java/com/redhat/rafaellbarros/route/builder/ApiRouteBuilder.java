@@ -1,5 +1,6 @@
 package com.redhat.rafaellbarros.route.builder;
 
+import com.redhat.rafaellbarros.model.Message;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.kafka.KafkaConstants;
@@ -11,7 +12,7 @@ public class ApiRouteBuilder extends RouteBuilder {
     protected String KAFKA_BOOTSTRAP_SERVERS = "{{quarkus.openshift.env.vars.kafka-bootstrap-servers}}";
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
 
         // REST and Open API configuration
         restConfiguration().bindingMode(RestBindingMode.auto)
@@ -19,27 +20,31 @@ public class ApiRouteBuilder extends RouteBuilder {
                 .dataFormatProperty("prettyPrint", "true")
                 .contextPath("/").port(8080)
                 .apiContextPath("/openapi")
-                .apiProperty("api.title", "Camel Quarkus Generic Kafka API Demo")
+                .apiProperty("api.title", "Camel Quarkus Generic Kafka API Send Demo")
                 .apiProperty("api.version", "1.0.0-SNAPSHOT")
                 .apiProperty("cors", "true");
 
         // REST methods configuration
-        rest("/rest").tag("API Demo using Camel and Quarkus")
+        rest("/rest").tag("API Send Demo using Camel and Quarkus")
                 .produces("application/json")
-                .get("/payloads/{code}")
+                .post("/messages")
+                .consumes("application/json")
+                .type(Message.class)
                 .description("Send payload to kafka")
-                .route().routeId("getPayload")
+                .route().routeId("setPayloadRest")
+                .convertBodyTo(Message.class)
                 .to("direct:sendToKafka")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                 .endRest();
 
         //Route that sends message to kafka topic
-        from("direct:sendToKafka").routeId("sendToKafka")
-                .log("code searched: ${header.code}")
+        from("direct:sendToKafka")
+                .routeId("setPayloadKafka")
+                .marshal().json()
                 .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
                 .to("kafka:"+ KAFKA_TOPIC + "?brokers=" + KAFKA_BOOTSTRAP_SERVERS)
-                .setBody(simple("Message Sended!"));
-
+                .log("Response Body: ${body}")
+                .setBody(simple("${body}"));
     }
 }
